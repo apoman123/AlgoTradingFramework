@@ -1,0 +1,70 @@
+@startuml
+actor programmer
+package backend{
+package backtesting{
+    usecase "walk forward analysis"
+    usecase "monkey test"
+    usecase "backtest"
+    usecase "show statistic results"
+    usecase "show result diagram"
+    usecase "parameter optimization using search based method"
+}
+
+package broker{
+    usecase "place order"
+    usecase "take data flow"
+    usecase "incubation"
+}
+
+package Accounting{
+    usecase "update candle sticks"
+    usecase "manage current positions"
+    usecase "update indicators"
+    usecase "manage fund"
+    usecase "position sizing"
+    usecase "manage comodities"
+    usecase "manage stop loss/profit"
+}
+
+actor strategy
+
+left to right direction
+programmer --> "show result diagram"
+programmer --> "show statistic results"
+programmer --> "backtest"
+programmer --> "monkey test"
+programmer --> "walk forward analysis"
+programmer --> "parameter optimization using search based method"
+
+strategy --> "place order"
+strategy --> "take data flow"
+strategy --> "update indicators"
+strategy --> "manage current positions"
+strategy --> "update candle sticks"
+strategy --> "manage fund"
+strategy --> "position sizing"
+strategy --> "manage comodities"
+strategy --> "manage stop loss/profit"
+strategy --> "incubation"
+
+left to right direction
+backtest ..> strategy : <<include>>
+"monkey test" ..> strategy : <<include>>
+"walk forward analysis" ..> strategy : <<include>>
+"parameter optimization using search based method" ..> strategy : <<include>>
+}
+
+package frontend{
+ usecase "show statistics of current strategies"
+ usecase "stop strategy from trading"
+ usecase "start strategy to trade"
+ usecase "show current funding size"
+ usecase "show trading history"
+
+ programmer --> "show statistics of current strategies"
+ programmer --> "stop strategy from trading"
+ programmer --> "start strategy to trade"
+ programmer --> "show current funding size"
+ programmer --> "show trading history"
+}
+@enduml
