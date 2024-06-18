@@ -1,0 +1,131 @@
+@startuml
+class Strategy{
+    Broker broker
+    Accounting accounting
+    int warmup_candles_count
+    onTick()
+    placeLimitOrder()
+    placeMarketOrder()
+    closeAllPositions()
+}
+
+class Accounting{
+    Orders positions
+    Orders ongoing_orders
+    dictionary candles
+
+    'stop loss/profit
+    setStopLoss()
+    setStopProfit()
+    'position sizing
+    setPositionSize()
+   'fund management
+    setFund()
+    'set Indicators
+    setIndicators()
+    'comodities
+    addComodities()
+    deleteComodities()
+    'position management
+    addPosition()
+    deletePosition()
+    addOngoingOrder()
+    deleteOngoingOrder()
+    'update data
+    updataCandles()
+    updateIndicators()
+
+}
+
+abstract class StrategyTest{
+    Strategy strategy
+    dictionary history_candles
+    showResult()
+    test()
+    getHistoryData()
+
+}
+
+
+
+class WalkForwardTest{
+    Strategy strategy
+    dictionary history_candles
+    showResult()
+    test()
+    getHistoryData()
+
+}
+
+class BackTest{
+    Strategy strategy
+    dictionary history_candles
+    showResult()
+    test()
+    getHistoryData()
+
+}
+
+class MonkeyTest{
+    Strategy strategy
+    dictionary history_candles
+    showResult()
+    test()
+    getHistoryData()
+
+}
+
+abstract class Broker{
+    
+    retrieveNewCandles()
+    placeLimitOrder()
+    placeMarketOrder()
+}
+
+class BinanceBroker{
+    retrieveNewCandles()
+    placeLimitOrder()
+    placeMarketOrder()
+}
+
+class IncubationBroker{
+    retrieveNewCandles()
+    placeLimitOrder()
+    placeMarketOrder()
+}
+
+abstract class Order{
+    float amounts
+    float units
+    String direction
+}
+
+class LimitOrder{
+    float amount
+    float units
+    float limitprice
+    String direction
+}
+
+class MarketOrder{
+    float amount
+    float units
+    String direction
+    
+}
+
+Order <|-- LimitOrder
+Order <|-- MarketOrder
+
+StrategyTest <|-- MonkeyTest
+StrategyTest <|-- BackTest
+StrategyTest <|-- WalkForwardTest
+
+Broker <|-- BinanceBroker
+Broker <|-- IncubationBroker
+
+Strategy <-- Broker
+Strategy <-- Accounting
+Order <.. Strategy
+Strategy <.. StrategyTest
+@enduml
