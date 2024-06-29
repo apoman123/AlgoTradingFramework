@@ -7,18 +7,19 @@ class Strategy{
     placeLimitOrder()
     placeMarketOrder()
     closeAllPositions()
+    'stop loss/profit
+    stopLoss()
+    stopProfit()
+    'position sizing
+    positionSize()
 }
 
 class Accounting{
     Orders positions
     Orders ongoing_orders
     dictionary candles
+    float total_fund
 
-    'stop loss/profit
-    setStopLoss()
-    setStopProfit()
-    'position sizing
-    setPositionSize()
    'fund management
     setFund()
     'set Indicators
@@ -76,7 +77,7 @@ class MonkeyTest{
 }
 
 abstract class Broker{
-    
+
     retrieveNewCandles()
     placeLimitOrder()
     placeMarketOrder()
@@ -111,7 +112,7 @@ class MarketOrder{
     float amount
     float units
     String direction
-    
+
 }
 
 Order <|-- LimitOrder
