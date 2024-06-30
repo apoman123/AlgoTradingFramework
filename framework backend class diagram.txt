@@ -15,6 +15,7 @@ class Strategy{
 }
 
 class Accounting{
+    Broker broker
     Orders positions
     Orders ongoing_orders
     dictionary candles
@@ -99,6 +100,7 @@ abstract class Order{
     float amounts
     float units
     String direction
+    Accounting accounting
 }
 
 class LimitOrder{
@@ -125,6 +127,8 @@ StrategyTest <|-- WalkForwardTest
 Broker <|-- BinanceBroker
 Broker <|-- IncubationBroker
 
+Accounting <-- Order
+Accounting <-- Broker
 Strategy <-- Broker
 Strategy <-- Accounting
 Order <.. Strategy
