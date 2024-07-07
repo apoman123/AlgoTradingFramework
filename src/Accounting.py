@@ -1,40 +1,34 @@
 from Order import Order
 import pandas as pd
-
+import time
 
 
 # Strategy class will directly manipulate candles and positions itself
 class Accounting():
-    def __init__(self, equity, comission, candles_limit=10000) -> None:
+    def __init__(self, equity, comission, leverage) -> None:
         # history informations, update whenever a buy or sell happened
         self.history_positions = {}
         self.history_equities = []
 
         # current informations
-        self.positions = []
-        self.ongoing_orders = {}
-        self.candles = {}
-        self.euity = equity
+        self.leverage = leverage
         self.comission = comission
+        self.positions = {"long": [], "short":[]}   # positions structure would be {
+                                                    # "long": [{"symbol": symbol, "units": units, "bought_price": price, "position_type": position_type}...],
+                                                    # "short": [{"symbol": symbol, "units": units, "bought_price": price, "position_type": position_type}...]
+                                                    # }
 
-    def setFund(self, value):
-        self.equity = value
-
-    def addComodity(self, comodity_name:str, candle:pd.DataFrame):
-        self.candles[comodity_name] = candle
-
-    def deleteComodity(self, comodity_name:str):
-        del self.candles[comodity_name]      
+        self.ongoing_orders = {} # ongoing_orders structure would be {"order_id": Order}
+        self.candles = {} # candles structure would be {timeframe: {symbol:candles, ...}}
+        self.euity = equity
 
     def addOngoingOrder(self, order: Order):
-        self.ongoing_orders.append(order)
-        return len(self.ongoing_orders) - 1 # return the order id 
+        self.ongoing_orders[Order.order_id] = Order
 
     def deleteOngoingOrder(self, order_id):
-        del self.ongoing_orders
+        del self.ongoing_orders[order_id]
 
-    def updateCandles(self):
-        pass
+
 
 
 
